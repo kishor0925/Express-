@@ -49,7 +49,6 @@ app.post("/upload" , async(req, res) => {
   res.send(result)
 })
 
-
 app.get("/data", async (req, res) => {
   const result = await demo.find().toArray();
   res.send(result);
