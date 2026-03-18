@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 });
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion , ObjectId} = require('mongodb');
 const uri = "mongodb+srv://kishor250:kish123@cluster0.fwydf0q.mongodb.net/?appName=Cluster0";
 
 const client = new MongoClient(uri, {
@@ -55,7 +55,16 @@ app.get("/data", async (req, res) => {
   res.send(result);
 });
 
+app.get("/data/:id", async (req, res) => {
+  console.log("ID ROUTE HIT"); 
+  const id = req.params.id;
+  const obj = { _id: new ObjectId(id) };
+  const result = await demo.findOne(obj);
+  res.send(result);
+});
+
+
 const PORT = 5020;
 app.listen(PORT, () => {
-    console.log(`Server running... hi`)
+  console.log('connected..')
 })
