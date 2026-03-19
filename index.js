@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 
 
 const { MongoClient, ServerApiVersion , ObjectId} = require('mongodb');
+const console = require('console');
 const uri = "mongodb+srv://kishor250:kish123@cluster0.fwydf0q.mongodb.net/?appName=Cluster0";
 
 const client = new MongoClient(uri, {
@@ -62,6 +63,27 @@ app.get("/data/:id", async (req, res) => {
   res.send(result);
 });
 
+app.patch("/getdata/:id" , async(req, res) => {
+
+  const id = req.params.id;
+  const obj = { _id : new ObjectId(id)};
+  const data = req.body;
+  const updateData = {$set : {...data}};
+  const options = {upsert : true};
+  const result = await demo.updateOne(obj, updateData, options);
+  res.send(result)
+  
+})
+
+app.delete("/delete/:id" , async(req , res) => {
+
+  const id = req.params.id;
+  // console.log("DELETE HIT", req.params.id);
+  const obj = {_id: new ObjectId(id)};
+  const del = await demo.deleteOne(obj);
+
+  res.send(del);
+})
 
 const PORT = 5020;
 app.listen(PORT, () => {
